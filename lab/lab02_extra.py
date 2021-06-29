@@ -38,7 +38,6 @@ def composite_identity(f, g):
     "*** YOUR CODE HERE ***"
     def h(x):
         return compose1(f, g)(x) == compose1(g, f)(x)
-
     return h
 
 def count_cond(condition):
@@ -75,7 +74,6 @@ def count_cond(condition):
             if condition(n, i + 1):
                 count += 1
         return count
-
     return h
 
 def cycle(f1, f2, f3):
