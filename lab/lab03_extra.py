@@ -19,10 +19,7 @@ def is_prime(n):
         else:
             return divider(i - 1)
     
-    if n == 2:
-        return True
-    else:
-        return divider(n - 1)
+    return divider(n - 1)
     
 
 def gcd(a, b):
