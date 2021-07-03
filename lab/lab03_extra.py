@@ -55,7 +55,12 @@ def ten_pairs(n):
     """
     "*** YOUR CODE HERE ***"
     def pair(left_rest, digit):
-        return str(left_rest).count(str(10 - digit))
+        if left_rest == 0:
+            return 0
+        elif left_rest % 10 + digit == 10:
+            return 1 + pair(left_rest // 10, digit)
+        else:
+            return pair(left_rest // 10, digit)
 
     if n < 10:
         return 0
