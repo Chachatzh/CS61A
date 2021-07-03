@@ -42,6 +42,7 @@ def product(n, term):
         result *= term(i + 1)
     return result
 
+
 def factorial(n):
     """Return n factorial for n >= 0 by calling product.
 
@@ -137,7 +138,15 @@ def make_repeater(f, n):
     5
     """
     "*** YOUR CODE HERE ***"
-
+    def repeater(f, n, x):
+        if n == 0:
+            return x
+        elif n == 1:
+            return f(x)
+        else:
+            return f(repeater(f, n - 1, x))
+    
+    return lambda x: repeater(f, n, x)
 
 
 def num_sevens(n):
@@ -250,14 +259,14 @@ def count_change(amount):
             wo_biggest = count(n, coin // 2)
             return with_biggest + wo_biggest
 
-    """Return the biggest coin of i
-    
-    >>> biggest(7)
-    4
-    >>> biggest(8)
-    8
-    """
     def biggest(i):
+        """Return the biggest coin of i
+        
+        >>> biggest(7)
+        4
+        >>> biggest(8)
+        8
+        """
         if i < 2:
             return 1
         else:
@@ -303,6 +312,7 @@ def move_stack(n, start, end):
     """
     assert 1 <= start <= 3 and 1 <= end <= 3 and start != end, "Bad start/end"
     "*** YOUR CODE HERE ***"
+    
 
 from operator import sub, mul
 
