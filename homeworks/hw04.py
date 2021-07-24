@@ -230,6 +230,14 @@ def remove_all(link , value):
     <0 1>
     """
     "*** YOUR CODE HERE ***"
+    if link.rest is Link.empty:
+        return
+    elif link.rest.first == value:
+        link.rest = link.rest.rest
+        remove_all(link, value)
+    else:
+        remove_all(link.rest, value)
+
 
 def generate_paths(t, x):
     """Yields all possible paths from the root of t to a node with the label x
