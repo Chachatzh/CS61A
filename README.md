@@ -7,7 +7,6 @@ lab07 num_trees, prune_leaves
   
 hw02 extra  
 hw03 extra  
-hw04  
   
 proj typing_test Q4-8  
 proj ants extra, optional  
