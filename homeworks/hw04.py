@@ -275,11 +275,24 @@ def generate_paths(t, x):
     """
 
     "*** YOUR CODE HERE ***"
+    paths = []
+    
+    def generate_path(t, x, p=[]):
+        p.append(t.label)
+        if p[-1] == x:
+            paths.append(p)
+        
+        if t.is_leaf():
+            return
+        else:
+            for b in t.branches:
+                new_p = p.copy()
+                generate_path(b, x, new_p)
+    
+    generate_path(t, x)
+    for path in paths:
+        yield path
 
-    for _______________ in _________________:
-        for _______________ in _________________:
-
-            "*** YOUR CODE HERE ***"
 
 ## Link Class ##
 
