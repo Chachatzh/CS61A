@@ -7,6 +7,4 @@
 
 
 (define-macro (def func bindings body)
-    (let 
-        ((fn (cons func bindings)))
-        `(begin (define ,fn ,body))))
+    `(begin (define ,(cons func bindings) ,body)))
