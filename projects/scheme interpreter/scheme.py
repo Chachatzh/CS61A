@@ -57,7 +57,11 @@ def eval_all(expressions, env):
     """Evaluate each expression in the Scheme list EXPRESSIONS in
     environment ENV and return the value of the last."""
     # BEGIN PROBLEM 8
-    return scheme_eval(expressions.first, env)
+    result = None
+    while expressions is not nil:
+        result = scheme_eval(expressions.first, env)
+        expressions = expressions.second
+    return result
     # END PROBLEM 8
 
 ################
@@ -91,9 +95,8 @@ class Frame(object):
             return self.bindings[symbol]
         elif self.parent:
             return self.parent.lookup(symbol)
-        else:
         # END PROBLEM 3
-            raise SchemeError('unknown identifier: {0}'.format(symbol))
+        raise SchemeError('unknown identifier: {0}'.format(symbol))
 
 
     def make_child_frame(self, formals, vals):
@@ -108,7 +111,8 @@ class Frame(object):
         <{a: 1, b: 2, c: 3} -> <Global Frame>>
         """
         # BEGIN PROBLEM 11
-        "*** YOUR CODE HERE ***"
+        new_frame = Frame(self)
+        
         # END PROBLEM 11
 
 ##############
@@ -220,7 +224,9 @@ def do_define_form(expressions, env):
         # END PROBLEM 6
     elif isinstance(target, Pair) and scheme_symbolp(target.first):
         # BEGIN PROBLEM 10
-        "*** YOUR CODE HERE ***"
+        target, expr = target.first, Pair(target.second, expressions.second)
+        env.define(target, do_lambda_form(expr, env))
+        return target
         # END PROBLEM 10
     else:
         bad_target = target.first if isinstance(target, Pair) else target
@@ -244,7 +250,7 @@ def do_lambda_form(expressions, env):
     formals = expressions.first
     check_formals(formals)
     # BEGIN PROBLEM 9
-    "*** YOUR CODE HERE ***"
+    return LambdaProcedure(formals, expressions.second, env)
     # END PROBLEM 9
 
 def do_if_form(expressions, env):
