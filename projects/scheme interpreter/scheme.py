@@ -112,7 +112,13 @@ class Frame(object):
         """
         # BEGIN PROBLEM 11
         new_frame = Frame(self)
-        
+        if len(formals) == len(vals):
+            while formals is not nil:
+                new_frame.define(formals.first, vals.first)
+                formals, vals = formals.second, vals.second
+        else:
+            raise SchemeError
+        return new_frame
         # END PROBLEM 11
 
 ##############
@@ -177,7 +183,7 @@ class LambdaProcedure(Procedure):
         """Make a frame that binds my formal parameters to ARGS, a Scheme list
         of values, for a lexically-scoped call evaluated in environment ENV."""
         # BEGIN PROBLEM 12
-        "*** YOUR CODE HERE ***"
+        return self.env.make_child_frame(self.formals, args)
         # END PROBLEM 12
 
     def __str__(self):
@@ -264,13 +270,27 @@ def do_if_form(expressions, env):
 def do_and_form(expressions, env):
     """Evaluate a (short-circuited) and form."""
     # BEGIN PROBLEM 13
-    "*** YOUR CODE HERE ***"
+    val = True
+    while expressions:
+        val = scheme_eval(expressions.first, env)
+        if scheme_truep(val):
+            expressions = expressions.second
+        else:
+            return False
+    return val
     # END PROBLEM 13
 
 def do_or_form(expressions, env):
     """Evaluate a (short-circuited) or form."""
     # BEGIN PROBLEM 13
-    "*** YOUR CODE HERE ***"
+    val = False
+    while expressions:
+        val = scheme_eval(expressions.first, env)
+        if scheme_truep(val):
+            return val
+        else:
+            expressions = expressions.second
+    return val
     # END PROBLEM 13
 
 def do_cond_form(expressions, env):
@@ -286,7 +306,7 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if scheme_truep(test):
             # BEGIN PROBLEM 14
-            "*** YOUR CODE HERE ***"
+            return eval_all(clause.second, env) or test
             # END PROBLEM 14
         expressions = expressions.second
 
@@ -304,7 +324,16 @@ def make_let_frame(bindings, env):
     if not scheme_listp(bindings):
         raise SchemeError('bad bindings list in let form')
     # BEGIN PROBLEM 15
-    "*** YOUR CODE HERE ***"
+    formals, vals = "(", "("
+    while bindings is not nil:
+        binding = bindings.first
+        check_form(binding, 2, 2)
+        formals += " " + str(binding.first)
+        vals += " " + str(eval_all(binding.second, env))
+        bindings = bindings.second
+    formals, vals = read_line(formals + ")"), read_line(vals + ")")
+    check_formals(formals)
+    return env.make_child_frame(formals, vals)
     # END PROBLEM 15
 
 def do_define_macro(expressions, env):
