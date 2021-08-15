@@ -306,7 +306,10 @@ def do_cond_form(expressions, env):
             test = scheme_eval(clause.first, env)
         if scheme_truep(test):
             # BEGIN PROBLEM 14
-            return eval_all(clause.second, env) or test
+            if clause.second is not nil:
+                return eval_all(clause.second, env)
+            else:
+                return test
             # END PROBLEM 14
         expressions = expressions.second
 
@@ -451,7 +454,8 @@ class MuProcedure(Procedure):
         self.body = body
 
     # BEGIN PROBLEM 16
-    "*** YOUR CODE HERE ***"
+    def make_call_frame(self, args, env):
+        return env.make_child_frame(self.formals, args)
     # END PROBLEM 16
 
     def __str__(self):
@@ -467,7 +471,7 @@ def do_mu_form(expressions, env):
     formals = expressions.first
     check_formals(formals)
     # BEGIN PROBLEM 16
-    "*** YOUR CODE HERE ***"
+    return MuProcedure(formals, expressions.second)
     # END PROBLEM 16
 
 SPECIAL_FORMS['mu'] = do_mu_form

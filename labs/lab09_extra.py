@@ -140,7 +140,6 @@ def has_cycle(link):
         if curr is link:
             return True
 
-
 def has_cycle_constant(link):
     """Return whether link contains a cycle.
 
@@ -153,7 +152,12 @@ def has_cycle_constant(link):
     False
     """
     "*** YOUR CODE HERE ***"
-    # same as above
+    curr = link.rest
+    while curr:
+        if curr is link:
+            return True
+        curr = curr.rest
+    return False
 
 
 def reverse_other(t):

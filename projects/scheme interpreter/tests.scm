@@ -10,7 +10,75 @@
 ;;; *** Add your own tests here! ***
 ;;; ********************************
 ; BEGIN PROBLEM 0
-'replace-this-line
+20
+; expect 20
+
+(+ 1 (- 4 2) (* 1 3) (/ 8 2))
+; expect 10
+
+(list 1 `(2 ,'(3)))
+; except (1 (2 (3)))
+
+(define a '(1 2 3))
+; except a
+a
+; except (1 2 3)
+(eval 'a)
+; except (1 2 3)
+
+(define (a x) (+ x 1))
+(a 1)
+; except 2
+
+(begin (+ 1 2) (* 3 4))
+;except 12
+
+(define f (lambda (x) (* x x)))
+;except f
+(f 5)
+; except 25
+
+(or (and) (/ 1 0))
+; except #t
+
+(define (filter-lst f lst)
+	(cond
+		((null? lst) nil)
+		((f (car lst)) (cons (car lst) (filter-lst f (cdr lst))))
+		(else (filter-lst f (cdr lst)))))
+(filter-lst even? '(0 1 1 2 3 5 8))
+; expect (0 2 8)
+
+(define (make-adder num)
+	(lambda (x) (+ x num)))
+(define adder (make-adder 5))
+(adder 8)
+; expect 13
+
+(define (remove item lst)
+    (cond
+        ((null? lst) nil)
+        ((= (car lst) item) (remove item (cdr lst)))
+        (else (cons (car lst) (remove item (cdr lst))))))
+
+(remove 3 nil)
+; expect ()
+(remove 5 '(5 3 5 5 1 4 5 4))
+; expect (3 1 4 4)
+
+(define (unique s)
+    (if (null? s)
+        s
+        (let 
+            ((sub-s (filter (lambda (x) (not (equal? x (car s)))) s)))
+            (cons (car s) (unique sub-s)))))
+(unique '(a b c a a b b c))
+; except (a b c)
+
+(define f (mu () (* a (/ b c))))
+(define g (lambda () (define a 2) (define b 9) (define c 3) (f)))
+(g)
+; except 6
 ; END PROBLEM 0
 
 ;;; These are examples from several sections of "The Structure
@@ -60,7 +128,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; Move the following (exit) line down the file to run additional tests. ;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(exit)
+
 
 
 ;;; 1.1.2
