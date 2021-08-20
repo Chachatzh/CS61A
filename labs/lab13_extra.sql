@@ -5,8 +5,8 @@ CREATE TABLE su19favpets AS
 
 
 CREATE TABLE su19dog AS
-  SELECT pet, count FROM su19favpets WHERE pet = "dog";
+  SELECT * FROM su19favpets WHERE pet = "dog";
 
 
 CREATE TABLE obedienceimages AS
-  SELECT seven, instructor, COUNT(instructor) AS count FROM students WHERE seven = "7" GROUP BY instructor;
+  SELECT seven, instructor, COUNT(*) AS count FROM students WHERE seven = "7" GROUP BY instructor;
